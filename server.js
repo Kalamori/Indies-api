@@ -10,17 +10,22 @@ import express from 'express'
 const app = express()
 const port = process.env.PORT || 3000
 
-
-mongoose.connect(process.env.MONGODB_URI)
-
-mongoose.connection.on('connected', () => {
-    console.log(`Connected to MongoDB ${mongoose.connection.name} 🔒`)
-})
-
-
+// Middleware
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.listen(3000, () => {
-    console.log('The express app is ready! 🚀')
-})
+
+
+
+
+// Server connections
+const startServers = async () => {
+    try {
+     await mongoose.connect(process.env.MONGODB_URI)
+    console.log(`Connected to MongoDB ${mongoose.connection.name} Database 🔒`)
+    app.listen(port, () => console.log(`Server up and running on port ${port} 🚀`))
+    } catch (error) {
+    console.log(error)
+    }
+ }
+startServers()
