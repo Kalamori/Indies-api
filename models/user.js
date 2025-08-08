@@ -1,25 +1,41 @@
 import mongoose from 'mongoose'
 
 const userSchema = new mongoose.Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        unique: true,
+        auto: true,
+    },
     name: {
-        type: string,
+        type: String,
         required: ['Please provide a name', true],
         unique: true,
     },
     emai: {
-        type: string,
-        required: true,
+        type: String,
+        required: ['Please provide a email address',true],
         unique: true,
+        lowercase: true,
     },
     password: {
-        type: string,
-        required: true,
+        type: String,
+        required: ['Please provide a password',true],
+    },
+    passwordConfrim: {
+        type: String,
+        required: ['Please provide the same password as above', true],
     },
     role: {
-        type: string,
+        type: String,
         required: true,
+        enum: ['user', 'admin'],
+        default: 'user',
     },
-    createdAt: datetime,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const User = mongoose.model('User', userSchema)
