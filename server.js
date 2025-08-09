@@ -5,7 +5,9 @@ import 'dotenv/config'
 import cors from 'cors'
 import express from 'express'
 
-//Routes
+//Routers
+
+import menuRouter from './controllers/menu.js'
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -14,8 +16,8 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(morgan('dev'))
 
-
-
+// Routes
+app.use('/api/menu', menuRouter)
 
 
 // Server connections

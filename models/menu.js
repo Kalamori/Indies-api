@@ -14,6 +14,7 @@ const itemSchema = new mongoose.Schema({
         price: {
             type: Number,
             required: true,
+            default: 0,
         },
         category: {
             type: String,
@@ -35,7 +36,7 @@ const menuSchema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        unique: true,
+        required: true,
     },
     title: {
         type: String,
