@@ -13,6 +13,13 @@ router.post('/', async (req, res, next) => {
 })
 
 // Index
+router.get('/', async (req, res, next) => {
+    try {
+        return res.json({ message: 'Hit Index Route'})
+    } catch (error) {
+        next(error)
+    }
+})
 
 // Show
 
