@@ -22,6 +22,13 @@ router.get('/', async (req, res, next) => {
 })
 
 // Show
+router.get('/:id', async (req, res, next) => {
+    try {
+        return res.json({ message: 'Hit Show Route'})
+    } catch (error) {
+        next(error)
+    }
+})
 
 // Update
 
