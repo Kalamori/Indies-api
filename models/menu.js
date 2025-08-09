@@ -1,11 +1,37 @@
 import mongoose from "mongoose"
 
+const itemSchema = new mongoose.Schema({
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        description: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        category: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        img_URL: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+})
+
 const menuSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true,
-    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -22,6 +48,7 @@ const menuSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    items:[itemSchema],
     createdAt: {
         type: Date,
         default: Date.now,
