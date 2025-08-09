@@ -31,8 +31,22 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Update
+router.put('/:id', async (req, res, next) => {
+    try {
+        return res.json({ message: 'Hit Update Route'})
+    } catch (error) {
+        next(error)
+    }
+})
 
 // Delete
+router.delete('/:id', async (req, res, next) => {
+    try {
+        return res.json({ message: 'Hit Delete Route'})
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 
