@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
         required: ['Please provide a name', true],
         unique: true,
     },
-    emai: {
+    email: {
         type: String,
         required: ['Please provide a email address',true],
         unique: true,
@@ -21,10 +21,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: ['Please provide a password',true],
-    },
-    passwordConfrim: {
-        type: String,
-        required: ['Please provide the same password as above', true],
     },
     role: {
         type: String,
