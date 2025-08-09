@@ -6,7 +6,8 @@ const router = express.Router()
 // Create
 router.post('/', async (req, res, next) => {
     try {
-        return res.json({ message: 'Hit Create Route'})
+        const menu = await Menu.create(req.body)
+        res.status(201).json(menu)
     } catch (error) {
         next(error)
     }
