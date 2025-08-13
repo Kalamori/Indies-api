@@ -7,7 +7,8 @@ const router = express.Router()
 router.post('/', async (req, res, next) => {
     try {
         const menu = await Menu.create(req.body)
-        res.status(201).json(menu)
+        console.log(menu)
+        return res.json({ message: 'HIT CREATE ROUTE'})
     } catch (error) {
         next(error)
     }

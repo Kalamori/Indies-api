@@ -1,16 +1,12 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
 const userSchema = new mongoose.Schema({
-    _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true,
-        auto: true,
-    },
-    name: {
+    username: {
         type: String,
-        required: ['Please provide a name', true],
+        required: ['Please provide a username', true],
         unique: true,
+        trim: true,
     },
     email: {
         type: String,
@@ -21,6 +17,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: ['Please provide a password',true],
+    },
+    passwordConfirmation: {
+        type: String,
+        required: true,
     },
     role: {
         type: String,
@@ -33,6 +33,15 @@ const userSchema = new mongoose.Schema({
         default: Date.now
     }
 })
+
+// Hash the password just before saving a new user
+userSchema.pre('save', function(next){
+    if (this.isModified('password')){
+      this.password = bcrypt.hashSync(this.password, 12)
+    }
+    next()
+})
+
 
 const User = mongoose.model('User', userSchema)
 
