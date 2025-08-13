@@ -1,13 +1,14 @@
 import express from 'express'
 import Menu from '../models/menu.js'
+import { BadRequestError, NotFound } from '../utils/errors.js'
+import verifyToken from '../middleware/verifyToken.js'
+import admin from '../middleware/admin.js'
 
 const router = express.Router()
 
 // Create
-router.post('/', async (req, res, next) => {
+router.post('/', verifyToken, admin('admin'), async (req, res, next) => {
     try {
-        const menu = await Menu.create(req.body)
-        console.log(menu)
         return res.json({ message: 'HIT CREATE ROUTE'})
     } catch (error) {
         next(error)
@@ -33,7 +34,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Update
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         return res.json({ message: 'Hit Update Route'})
     } catch (error) {
@@ -42,7 +43,7 @@ router.put('/:id', async (req, res, next) => {
 })
 
 // Delete
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         return res.json({ message: 'Hit Delete Route'})
     } catch (error) {
