@@ -1,3 +1,4 @@
+
 const logError = (err) => {
   console.log('-----------------')
   console.log('🚨 Error 🚨')
@@ -15,6 +16,11 @@ const logError = (err) => {
 
 const errorHandler = (err, req, res, next) => {
   logError(err)
+
+const status = err.status || 500
+const message = err.publicMessage || 'Something went wrong'
+
+res.status(status).json({ message })
 
   // Custom Validation Error (InvalidData)
   if (err.name === 'Invalid Data') {
@@ -38,22 +44,17 @@ const errorHandler = (err, req, res, next) => {
    }
 
 
-   if (err.status === 401 || err.name === 'Unauthorized') {
+   if (err.status === 401 || err.name === 'Unauthorized' || err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
     return res.status(401).json({ message: err.message })
   }
-//   if (err.status === 404 || err.name === 'NotFound') {
-//     return res.status(404).json({ message: err.message })
-//   }
 
- 
+   if (err.status === 403 || err.name === 'Forbidden') {
+    return res.status(403).json({ message: err.message })
+  }
 
-//   if (err.status === 403 || err.name === 'Forbidden') {
-//     return res.status(403).json({ message: err.message })
-//   }
-
-//   if (err.name === 'CastError' && err.kind === 'ObjectId') {
-//     return res.status(400).json({ message: 'Invalid ObjectId' })
-//   }
+  if (err.status === 404 || err.name === 'NotFound') {
+    return res.status(404).json({ message: err.message })
+  }
 
 // Unique constraints (field value already exists)
 if (err.name === 'MongoServerError' && err.code === 11000) {
