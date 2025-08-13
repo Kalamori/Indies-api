@@ -5,7 +5,6 @@ import User from '../models/user.js'
 const verifyToken = async (req, res, next) => {
     try {
      const authHeader = (req.headers.authorization)
-
      if (!authHeader) throw new Unauthorized('No authorization header provided (Bearer Token)')
     
     const token = (authHeader.split(' ')[1])
