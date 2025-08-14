@@ -18,8 +18,8 @@ const errorHandler = (err, req, res, next) => {
   logError(err)
 
   // Custom Validation Error (InvalidData)
-  if (err.name === 'Invalid Data') {
-    return res.status(err.status).json(err.response)
+  if (err.name === 'InvalidData') {
+    return res.status(err.status).json({ message: err.message })
   }
 
   // Mongoose Validation Error
