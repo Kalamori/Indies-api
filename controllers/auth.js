@@ -9,18 +9,20 @@ const router = express.Router()
 // Sign up
 router.post('/sign-up', async (req, res, next) => {
     try {
-        // Ensure Passwords Match
-        if (req.body.password !== req.body.passwordConfirmation) {
-            throw new InvalidData('Passwords do not match', 'password')
+      const { username, password, passwordConfirmation } = req.body
+
+        if (!username || !password || !passwordConfirmation) {
+            throw new InvalidData('All fields are required')
         }
-        // Attempt to create new user
+
+        if (password !== passwordConfirmation) {
+          throw new InvalidData('Passwords do not match', 'password')
+        }
+
         const newUser = await User.create(req.body)
 
-        console.log(newUser)
-        
-        // Generating the token
         const token = generateToken(newUser)
-        // Response
+        
         return res.status(201).json({ token: token})
     } catch (error) {
         next (error)
