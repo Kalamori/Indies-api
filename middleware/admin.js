@@ -1,4 +1,4 @@
-import { Unauthorized } from "../utils/errors.js"
+import { Forbidden, Unauthorized } from "../utils/errors.js"
 
 const admin = (...roles) => {
     return (req, res, next) => {
@@ -8,7 +8,7 @@ const admin = (...roles) => {
         }
 
         if (!roles.includes(req.user.role)) {
-            throw new Unauthorized ('You do not have permission to access this route')
+            throw new Forbidden ('You do not have permission to access this route')
         }
         next()
     } catch (err) {

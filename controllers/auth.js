@@ -22,7 +22,7 @@ router.post('/sign-up', async (req, res, next) => {
 
         const token = generateToken(newUser)
 
-        return res.status(201).json({ token: token})
+        return res.status(201).json({ token })
     } catch (error) {
         next (error)
     }
@@ -50,9 +50,7 @@ router.post('/sign-in', async (req, res, next) => {
 
       const token = generateToken(foundUser)
 
-        return res.json({ token: token})
-
-      return res.json({ message: 'Sign in successful'})
+        return res.json({ token })
     } catch (error) {
         next(error)
     }

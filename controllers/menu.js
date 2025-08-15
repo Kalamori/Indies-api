@@ -18,8 +18,8 @@ router.post('/', verifyToken, admin('admin'), async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const menuItems = await Menu.find({})
-        res.status(200).json(menuItems)
+        const menus = await Menu.find({})
+        res.status(200).json(menus)
     } catch (error) {
         next(error)
     }
@@ -80,6 +80,26 @@ router.delete('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     } catch (error) {
         next(error)
     }
+})
+
+router.get('/:menuId/item/:itemId', async (req, res, next) => {
+  try {
+    const { menuId, itemId } = req.params
+
+    if (!mongoose.Types.ObjectId.isValid(menuId) || !mongoose.Types.ObjectId.isValid(itemId)) {
+      return res.status(400).json({ message: 'Invalid ID format' })
+    }
+
+    const menu = await Menu.findById(menuId)
+    if (!menu) throw new NotFound('Menu not found')
+
+    const item = menu.items.id(itemId)
+    if (!item) throw new NotFound('Menu item not found')
+
+    res.status(200).json(item)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.put('/:menuId/item/:itemId', verifyToken, admin('admin'), async (req, res, next) => {

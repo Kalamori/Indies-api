@@ -5,7 +5,8 @@ export const generateToken = (user) => {
             { 
               user: {
                _id: user._id,
-               username: user.username
+               username: user.username,
+               role: user.role
             }
             },
             process.env.TOKEN_SECRET,

@@ -38,6 +38,7 @@ userSchema.pre('save', function(next){
     if (this.isModified('password')){
       this.password = bcrypt.hashSync(this.password, 12)
     }
+    this.passwordConfirmation = undefined
     next()
 })
 

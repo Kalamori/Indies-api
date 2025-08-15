@@ -12,7 +12,7 @@ const verifyToken = async (req, res, next) => {
     
     const payload = jwt.verify(token, process.env.TOKEN_SECRET)
     
-    const foundUser = await User.findById(payload.user._id).select('-passwordConfirmation')
+    const foundUser = await User.findById(payload.user._id)
     if (!foundUser) throw new Unauthorized('User does not exist')
 
     req.user = foundUser
