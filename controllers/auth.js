@@ -6,7 +6,6 @@ import { generateToken } from '../utils/token.js'
 
 const router = express.Router()
 
-// Sign up
 router.post('/sign-up', async (req, res, next) => {
     try {
       const { username, password, passwordConfirmation } = req.body
@@ -22,13 +21,13 @@ router.post('/sign-up', async (req, res, next) => {
         const newUser = await User.create(req.body)
 
         const token = generateToken(newUser)
-        
+
         return res.status(201).json({ token: token})
     } catch (error) {
         next (error)
     }
 })
-// Sign in
+
 router.post('/sign-in', async (req, res, next) => {
     try {
         const { identifier, password } = req.body

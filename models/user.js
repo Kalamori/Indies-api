@@ -34,14 +34,12 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-// Hash the password just before saving a new user
 userSchema.pre('save', function(next){
     if (this.isModified('password')){
       this.password = bcrypt.hashSync(this.password, 12)
     }
     next()
 })
-
 
 const User = mongoose.model('User', userSchema)
 

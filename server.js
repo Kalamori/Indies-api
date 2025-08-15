@@ -5,20 +5,17 @@ import 'dotenv/config'
 import cors from 'cors'
 import express from 'express'
 
-// Middleware 
 import notFoundHandler from './middleware/notFoundHandler.js'
 import errorHandler from './middleware/errorHandler.js'
 import verifyToken from './middleware/verifyToken.js'
 import admin from './middleware/admin.js'
 
-//Routers
 import userRouter from './controllers/auth.js'
 import menuRouter from './controllers/menu.js'
 
 const app = express()
 const port = process.env.PORT || 3000
 
-// Middleware
 app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
@@ -26,11 +23,9 @@ app.use(cors({
 app.use(express.json())
 app.use(morgan('dev'))
 
-// Routes
 app.use('/api/auth', userRouter)
 app.use('/api/menu', menuRouter)
 
-// Protected Routes
 app.get('/api/user-profile', verifyToken, (req, res, next) => {
     console.log(req.user)
     return res.json({ message: 'HIT User Profile ROUTE'})
@@ -41,11 +36,9 @@ app.get('/api/admin-profile', verifyToken, admin('admin') ,(req, res, next) => {
     return res.json({ message: 'HIT Admin Profile ROUTE'})
 } )
 
-// Error Handler routes
 app.use(errorHandler)
 app.use(notFoundHandler)
 
-// Server connections
 const startServers = async () => {
     try {
      await mongoose.connect(process.env.MONGODB_URI)

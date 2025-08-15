@@ -7,7 +7,6 @@ import admin from '../middleware/admin.js'
 
 const router = express.Router()
 
-// Create
 router.post('/', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         const newMenu = await Menu.create({...req.body, owner: req.user._id})
@@ -17,7 +16,6 @@ router.post('/', verifyToken, admin('admin'), async (req, res, next) => {
     }
 })
 
-// Index
 router.get('/', async (req, res, next) => {
     try {
         const menuItems = await Menu.find({})
@@ -27,7 +25,6 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-// Show Menus
 router.get('/:id', async (req, res, next) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -49,7 +46,6 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-// Update Menu
 router.put('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -70,7 +66,6 @@ router.put('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     }
 })
 
-// Delete Menu
 router.delete('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -87,7 +82,6 @@ router.delete('/:id', verifyToken, admin('admin'), async (req, res, next) => {
     }
 })
 
-// Update a specific menu item
 router.put('/:menuId/item/:itemId', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.menuId) || !mongoose.Types.ObjectId.isValid(req.params.itemId)) {
@@ -109,7 +103,6 @@ router.put('/:menuId/item/:itemId', verifyToken, admin('admin'), async (req, res
     }
 })
 
-// Delete a specific menu item
 router.delete('/:menuId/item/:itemId', verifyToken, admin('admin'), async (req, res, next) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(req.params.menuId) || !mongoose.Types.ObjectId.isValid(req.params.itemId)) {

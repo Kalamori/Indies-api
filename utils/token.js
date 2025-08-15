@@ -7,9 +7,8 @@ export const generateToken = (user) => {
                _id: user._id,
                username: user.username
             }
-            }, // 1st arg payload
-            process.env.TOKEN_SECRET, // 2nd arg: Secret
-            { expiresIn: '2d'} // 3rd arg: options object
+            },
+            process.env.TOKEN_SECRET,
+            { expiresIn: '2d'}
         )
-        console.log(token);
 }
